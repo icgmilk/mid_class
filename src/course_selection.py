@@ -7,6 +7,13 @@ DATA_DIR = "data"
 STUDENTS_FILE = os.path.join(DATA_DIR, "students.json")
 COURSES_FILE = os.path.join(DATA_DIR, "courses.json")
 
+# Date dictionary
+DATE = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"}
+
+# credit limits
+MAX_CREDITS = 25
+MIN_CREDITS = 10
+
 # Load Data
 def load_data(file_path):
     try:
@@ -18,10 +25,6 @@ def load_data(file_path):
 def save_data(file_path, data):
     with open(file_path, 'w') as file:
         json.dump(data, file, indent=4)
-
-# Date directory
-
-date = {1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday"}
 
 # Create data directory if it doesn't exist
 if not os.path.exists(DATA_DIR):
@@ -36,7 +39,6 @@ if not students:
         "D1110176": {"name": "吳柏宏", "courses": [], "credits": 0},
         "D1123985": {"name": "許鈞翔", "courses": [], "credits": 0}
     }
-    save_data(STUDENTS_FILE, students)
 
 if not courses:
     courses = {
@@ -51,7 +53,6 @@ if not courses:
         "383403": {"name": "微積分(一)", "credits": 4, "schedule": {1 : [1, 2], 4 : [6, 7]}},
         "065535": {"name": "普通物理(二)", "credits": 3, "schedule": {5 : [1, 2, 3]}}
     }
-    save_data(COURSES_FILE, courses)
 
 # Utility Functions
 def authenticate_student(student_id):
@@ -72,7 +73,39 @@ def show_student_courses(student_id):
     pass
 
 def add_course(student_id, course_id):
-    pass
+    # This check does not describe in system requirement
+    if course_id not in courses:
+        print("\nError: Course does not exist.\n")
+        return
+    
+    student = students[student_id]
+    course = courses[course_id]
+
+    if course_id in student['courses']:
+        print(f"\nError: { student_id }({ student['name'] }) is already enrolled in this course.\n")
+        return
+    
+    if student['credits'] + course['credits'] > MAX_CREDITS:
+        print("\nError: Adding this course exceeds credit limit.\n")
+        return
+    
+    def list_intersect(list1, list2):
+        set1 = set(list1)
+        for i in list2:
+            if i in set1:
+                return True
+        return False
+    
+    for enrolled_course_id in student['courses']:
+        for day, period in courses[enrolled_course_id]['schedule'].items():
+            if day in course['schedule'] and list_intersect(course['schedule'][day], period):
+                print("\nError: Course schedule conflicts with an already enrolled course.\n")
+                return
+    
+    student['courses'].append(course_id)
+    student['credits'] += course['credits']
+
+    print(f"Add Course { course['name'] }({ course_id }) Successful!")
 
 def drop_course(student_id, course_id):
     pass
@@ -84,7 +117,7 @@ def main():
     if not authenticate_student(student_id):
         print("Invalid student ID. Exiting.")
         sys.exit()
-
+        
     while True:
         print("\n1. View Available Courses")
         print("2. View My Courses")
@@ -98,7 +131,8 @@ def main():
         elif choice == '2':
             pass
         elif choice == '3':
-            pass
+            course_id = input("Please enter course ID you want to add: ")
+            add_course(student_id, course_id)
         elif choice == '4':
             pass
         elif choice == '5':
@@ -108,4 +142,8 @@ def main():
             print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    finally:
+        save_data(STUDENTS_FILE, students)
+        save_data(COURSES_FILE, courses)
