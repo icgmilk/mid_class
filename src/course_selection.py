@@ -119,7 +119,21 @@ def add_course(student_id, course_id):
     print(f"\nAdd Course { course['name'] }({ course_id }) Successful!\n")
 
 def drop_course(student_id, course_id):
-    pass
+    
+    student = students[student_id]
+    
+    if course_id not in student['courses']:
+        print("\nError: Student is not enrolled in this course.\n")
+        return
+    
+    if student['credits'] - courses[course_id]['credits'] < MIN_CREDITS:
+        print("\nError: Dropping this course would go below the minimum credit limit.\n")
+        return
+    
+    student['courses'].remove(course_id)
+    student['credits'] -= courses[course_id]['credits']
+    
+    print(f"\nDrop Course { courses[course_id]['name'] }({ course_id }) Successful!\n")
 
 def main():
     print("Welcome to the Feng Chia Course Selection System")
@@ -145,7 +159,8 @@ def main():
             course_id = input("Please enter course ID you want to add: ")
             add_course(student_id, course_id)
         elif choice == '4':
-            pass
+            course_id = input("Please enter course ID you want to drop: ")
+            drop_course(student_id, course_id)
         elif choice == '5':
             print("Exiting the system. Goodbye!")
             break
