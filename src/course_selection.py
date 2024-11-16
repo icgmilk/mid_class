@@ -44,14 +44,15 @@ if not courses:
     courses = {
         "001419": {"name": "作業系統", "credits": 3, "schedule": {'1' : [3, 4], '2' : [6]}},
         "001432": {"name": "軟體工程開發實務", "credits": 3, "schedule": {'3' : [6, 7, 8]}},
-        "001434": {"name": "資料科學實務", "credits": 3, "schedule": {'2' : [3, 4], '3' : [2]}},
         "001433": {"name": "資料探勘導論", "credits": 3, "schedule": {'4' : [2, 3, 4]}},
+        "001434": {"name": "資料科學實務", "credits": 3, "schedule": {'2' : [3, 4], '3' : [2]}},
         "001439": {"name": "編譯器", "credits": 3, "schedule": {'1' : [6], '3' : [3, 4]}},
+        "065535": {"name": "普通物理(二)", "credits": 3, "schedule": {'5' : [1, 2, 3]}},
         "114514": {"name": "體育 - 空手道", "credits": 3, "schedule": {'5' : [6, 7, 8]}},
         "150449": {"name": "化妝品科學與應用", "credits": 3 , "schedule": {'3' : [7, 8, 9]}},
         "228922": {"name": "生命科學", "credits": 3 , "schedule": {'2' : [7, 8, 9]}},
-        "383403": {"name": "微積分(一)", "credits": 4, "schedule": {'1' : [1, 2], '4' : [6, 7]}},
-        "065535": {"name": "普通物理(二)", "credits": 3, "schedule": {'5' : [1, 2, 3]}}
+        "383403": {"name": "微積分(一)", "credits": 4, "schedule": {'1' : [1, 2], '4' : [6, 7]}}
+        
     }
 
 # Utility Functions
