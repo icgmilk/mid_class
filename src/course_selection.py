@@ -36,22 +36,23 @@ courses = load_data(COURSES_FILE)
 # Initialize Data if Empty
 if not students:
     students = {
-        "D1110176": {"name": "吳柏宏", "courses": [], "credits": 0},
-        "D1123985": {"name": "許鈞翔", "courses": [], "credits": 0}
+        "D1110176": {"name": "吳柏宏", "courses": ["001419", "001432", "001433", "001434", "001439", "228922", "383403"], "credits": 20},
+        "D1123985": {"name": "許鈞翔", "courses": ["001419", "001432", "001433", "001434", "001439"], "credits": 15}
     }
 
 if not courses:
     courses = {
         "001419": {"name": "作業系統", "credits": 3, "schedule": {'1' : [3, 4], '2' : [6]}},
         "001432": {"name": "軟體工程開發實務", "credits": 3, "schedule": {'3' : [6, 7, 8]}},
-        "001434": {"name": "資料科學實務", "credits": 3, "schedule": {'2' : [3, 4], '3' : [2]}},
         "001433": {"name": "資料探勘導論", "credits": 3, "schedule": {'4' : [2, 3, 4]}},
+        "001434": {"name": "資料科學實務", "credits": 3, "schedule": {'2' : [3, 4], '3' : [2]}},
         "001439": {"name": "編譯器", "credits": 3, "schedule": {'1' : [6], '3' : [3, 4]}},
+        "065535": {"name": "普通物理(二)", "credits": 3, "schedule": {'5' : [1, 2, 3]}},
         "114514": {"name": "體育 - 空手道", "credits": 3, "schedule": {'5' : [6, 7, 8]}},
         "150449": {"name": "化妝品科學與應用", "credits": 3 , "schedule": {'3' : [7, 8, 9]}},
         "228922": {"name": "生命科學", "credits": 3 , "schedule": {'2' : [7, 8, 9]}},
-        "383403": {"name": "微積分(一)", "credits": 4, "schedule": {'1' : [1, 2], '4' : [6, 7]}},
-        "065535": {"name": "普通物理(二)", "credits": 3, "schedule": {'5' : [1, 2, 3]}}
+        "383403": {"name": "微積分(一)", "credits": 4, "schedule": {'1' : [1, 2], '4' : [6, 7]}}
+        
     }
 
 # Utility Functions
@@ -118,7 +119,21 @@ def add_course(student_id, course_id):
     print(f"\nAdd Course { course['name'] }({ course_id }) Successful!\n")
 
 def drop_course(student_id, course_id):
-    pass
+    
+    student = students[student_id]
+    
+    if course_id not in student['courses']:
+        print("\nError: Student is not enrolled in this course.\n")
+        return
+    
+    if student['credits'] - courses[course_id]['credits'] < MIN_CREDITS:
+        print("\nError: Dropping this course would go below the minimum credit limit.\n")
+        return
+    
+    student['courses'].remove(course_id)
+    student['credits'] -= courses[course_id]['credits']
+    
+    print(f"\nDrop Course { courses[course_id]['name'] }({ course_id }) Successful!\n")
 
 def main():
     print("Welcome to the Feng Chia Course Selection System")
@@ -144,7 +159,8 @@ def main():
             course_id = input("Please enter course ID you want to add: ")
             add_course(student_id, course_id)
         elif choice == '4':
-            pass
+            course_id = input("Please enter course ID you want to drop: ")
+            drop_course(student_id, course_id)
         elif choice == '5':
             print("Exiting the system. Goodbye!")
             break
