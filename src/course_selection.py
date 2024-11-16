@@ -36,8 +36,8 @@ courses = load_data(COURSES_FILE)
 # Initialize Data if Empty
 if not students:
     students = {
-        "D1110176": {"name": "吳柏宏", "courses": [], "credits": 0},
-        "D1123985": {"name": "許鈞翔", "courses": [], "credits": 0}
+        "D1110176": {"name": "吳柏宏", "courses": ["001419", "001432", "001433", "001434", "001439", "228922", "383403"], "credits": 20},
+        "D1123985": {"name": "許鈞翔", "courses": ["001419", "001432", "001433", "001434", "001439"], "credits": 15}
     }
 
 if not courses:
