@@ -78,13 +78,12 @@ def show_student_courses(student_id):
                 timetable[int(day)][time] = courses[course_id]['name']
     
     for day, schedule in enumerate(timetable[1:], start=1):
-        print(f"{DATE[day]}:", end=' ')
-        for time, name in schedule.items():
+        print(f"{DATE[day]}:".rjust(12), end=' ')
+        for time, name in sorted(schedule.items()):
             print(f"|{time} {name}|", end=' ')
         print()
 
 def add_course(student_id, course_id):
-    # This check does not describe in system requirement
     if course_id not in courses:
         print("\nError: Course does not exist.\n")
         return
