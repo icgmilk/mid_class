@@ -84,7 +84,6 @@ def show_student_courses(student_id):
         print()
 
 def add_course(student_id, course_id):
-    # This check does not describe in system requirement
     if course_id not in courses:
         print("\nError: Course does not exist.\n")
         return
