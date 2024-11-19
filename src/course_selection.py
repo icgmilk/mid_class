@@ -172,6 +172,9 @@ def main():
             add_course(student_id, course_id)
         elif choice == '4':
             course_id = input("Please enter course ID you want to drop: ")
+            while not course_id:
+                print("\nError: Course ID cannot be empty.\n")
+                course_id = input("Please enter course ID you want to add: ")
             drop_course(student_id, course_id)
         elif choice == '5':
             print("Exiting the system. Goodbye!")
