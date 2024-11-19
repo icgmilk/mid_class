@@ -87,10 +87,6 @@ def show_student_courses(student_id):
     print(f'current credits: {students[student_id]['credits']}')
 
 def add_course(student_id, course_id):
-    if course_id == "":
-        print("\nError: Course ID cannot be empty.\n")
-        return
-
     if course_id not in courses:
         print("\nError: Course does not exist.\n")
         return
@@ -170,6 +166,9 @@ def main():
             show_student_courses(student_id)
         elif choice == '3':
             course_id = input("Please enter course ID you want to add: ")
+            while not course_id:
+                print("\nError: Course ID cannot be empty.\n")
+                course_id = input("Please enter course ID you want to add: ")
             add_course(student_id, course_id)
         elif choice == '4':
             course_id = input("Please enter course ID you want to drop: ")
