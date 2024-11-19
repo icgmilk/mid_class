@@ -75,13 +75,16 @@ def show_student_courses(student_id):
     for course_id in course_ids:
         for day, periods in courses[course_id]['schedule'].items():
             for time in periods:
-                timetable[int(day)][time] = courses[course_id]['name']
+                timetable[int(day)][time] = (course_id, courses[course_id]['name'])
     
+    print('------------------------------')
     for day, schedule in enumerate(timetable[1:], start=1):
         print(f"{DATE[day]}:".rjust(12), end=' ')
-        for time, name in sorted(schedule.items()):
-            print(f"|{time} {name}|", end=' ')
+        for time, (id, name) in sorted(schedule.items()):
+            print(f"|{time} [{id}]{name}|", end=' ')
         print()
+    print('------------------------------')
+    print(f'current credits: {students[student_id]['credits']}')
 
 def add_course(student_id, course_id):
     if course_id not in courses:
