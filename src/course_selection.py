@@ -87,6 +87,10 @@ def show_student_courses(student_id):
     print(f'current credits: {students[student_id]['credits']}')
 
 def add_course(student_id, course_id):
+    if course_id == "":
+        print("\nError: Course ID cannot be empty.\n")
+        return
+
     if course_id not in courses:
         print("\nError: Course does not exist.\n")
         return
@@ -142,7 +146,11 @@ def drop_course(student_id, course_id):
 
 def main():
     print("Welcome to the Feng Chia Course Selection System")
+    
     student_id = input("Please enter your student ID: ")
+    while not student_id:
+        print("\nError: You have not entered any student ID, please try again\n")
+        student_id = input("Please enter your student ID: ")
 
     if not authenticate_student(student_id):
         print("Invalid student ID. Exiting.")
