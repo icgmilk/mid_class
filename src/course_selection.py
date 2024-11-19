@@ -142,7 +142,11 @@ def drop_course(student_id, course_id):
 
 def main():
     print("Welcome to the Feng Chia Course Selection System")
+    
     student_id = input("Please enter your student ID: ")
+    while not student_id:
+        print("\nError: You have not entered any student ID, please try again\n")
+        student_id = input("Please enter your student ID: ")
 
     if not authenticate_student(student_id):
         print("Invalid student ID. Exiting.")
@@ -162,6 +166,9 @@ def main():
             show_student_courses(student_id)
         elif choice == '3':
             course_id = input("Please enter course ID you want to add: ")
+            while not course_id:
+                print("\nError: Course ID cannot be empty.\n")
+                course_id = input("Please enter course ID you want to add: ")
             add_course(student_id, course_id)
         elif choice == '4':
             course_id = input("Please enter course ID you want to drop: ")
