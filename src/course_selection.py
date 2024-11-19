@@ -120,6 +120,9 @@ def add_course(student_id, course_id):
 def drop_course(student_id, course_id):
     
     student = students[student_id]
+    if course_id == "":
+        print("\nError: Course ID cannot be empty.\n")
+        return
     
     if course_id not in student['courses']:
         print("\nError: Student is not enrolled in this course.\n")
