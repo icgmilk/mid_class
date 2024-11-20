@@ -84,7 +84,7 @@ def show_student_courses(student_id):
             print(f"|{time} [{id}]{name}|", end=' ')
         print()
     print('------------------------------')
-    print(f'current credits: {students[student_id]['credits']}')
+    print(f'current credits: {students[student_id]["credits"]}')
 
 def add_course(student_id, course_id):
     if course_id not in courses:
